@@ -5,15 +5,6 @@ RUN dnf update -y && \
     dnf install -y git python3 python3-pip python3-dnf skopeo && \
     dnf clean all
 
-# Clone and install rpm-lockfile-prototype
-RUN git clone https://github.com/konflux-ci/rpm-lockfile-prototype.git /opt/rpm-lockfile-prototype
-
-WORKDIR /opt/rpm-lockfile-prototype
-
-# Install Python dependencies if requirements exist
-RUN if [ -f requirements.txt ]; then pip3 install -r requirements.txt; fi && \
-    if [ -f setup.py ]; then pip3 install -e .; fi && \
-    if [ -f pyproject.toml ]; then pip3 install -e .; fi
-
+RUN pip3 install https://github.com/konflux-ci/rpm-lockfile-prototype/archive/refs/tags/v0.16.0.tar.gz
 
 ENTRYPOINT ["rpm-lockfile-prototype"]
